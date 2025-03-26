@@ -106,8 +106,6 @@ A locally hosted booking website exclusively focused on Syrian cities. It allows
   - `app/` - Application code
     - `models/` - Database models
     - `routes/` - API routes and views
-    - `templates/` - HTML templates
-    - `static/` - Static files (CSS, JS, images)
     - `utils/` - Utility functions
   - `instance/` - Instance-specific files (database)
   - `migrations/` - Database migrations
@@ -116,11 +114,12 @@ A locally hosted booking website exclusively focused on Syrian cities. It allows
   - `init_db.py` - Database initialization script
 
 - `frontend/` - Frontend assets
-  - `src/` - Source code
-    - `assets/` - Images and other assets
-    - `components/` - Reusable components
-    - `pages/` - Page components
-    - `utils/` - Utility functions
+  - `templates/` - HTML templates
+    - `auth/` - Authentication-related templates
+    - `main/` - Main application templates
+  - `static/` - Static files (CSS, JS, images)
+    - `images/` - Image assets
+      - `cities/` - City-specific images
 
 ## Environment Variables
 
