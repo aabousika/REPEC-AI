@@ -37,8 +37,8 @@ A locally hosted booking website exclusively focused on Syrian cities. It allows
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/syrian-compass.git
-   cd syrian-compass
+   git clone https://github.com/aabousika/REPEC-AI.git
+   cd REPEC-AI
    ```
 
 2. **Create and activate a virtual environment**
