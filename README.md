@@ -1,8 +1,7 @@
 # REPEC-AI
 
-# Reservation Efficiency Platform Easy Convenient Artifical Intelligence
-# Syrian Cities Booking & AI Recommendation Platform
-
+## Reservation Efficiency Platform Easy Convenient Artifical Intelligence
+## Syrian Cities Booking & AI Recommendation Platform
 
 A locally hosted booking website exclusively focused on Syrian cities. It allows users to search, explore, and book travel experiences across various Syrian destinations. The platform features an integrated AI-driven recommendation engine (powered by the ChatGPT API) that interacts with users via a conversational chat interface.
 
