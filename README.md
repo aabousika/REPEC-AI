@@ -1,4 +1,4 @@
-# REPEC-AI
+<img src="frontend/static/images/logo.png" alt="Syrian Compass Logo" width="200"/>
 
 ## Reservation Efficiency Platform Easy Convenient Artifical Intelligence
 ## Syrian Cities Booking & AI Recommendation Platform
