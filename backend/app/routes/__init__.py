@@ -1,4 +1,4 @@
-from .auth import auth_bp
-from .main import main_bp
-from .api import api_bp
+## mu .auth --> app.routes.auth azbat y3ne dlle bl dbt wen lshi 
 
+from app.routes.auth import auth_bp
+from app.routes.main import main_bp

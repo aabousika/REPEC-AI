@@ -1,24 +1,44 @@
+
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 from flask_migrate import Migrate
-from app.models import *
+from flask_login import LoginManager
+from flask_cors import CORS
+from dotenv import load_dotenv
+
+load_dotenv()
+
 db = SQLAlchemy()
 migrate = Migrate()
-
-
+login_manager = LoginManager()
 
 def create_app():
-    app = Flask(__name__,template_folder='REPEC-AI/frontend/templates',static_folder='REPEC-AI/frontend/static')
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydatabase.db'
+    app = Flask(__name__, 
+            template_folder='../../frontend/templates',
+            static_folder='../../frontend/static')
+
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default-secret-key')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///app.db')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     db.init_app(app)
     migrate.init_app(app, db)
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
     
-    with app.app_context():
-        from .models import city, user, booking
+    ### hon nsyaneh tjebe l CORS w nsyaneh l blueprint w l oauth f jbtlek yahon ###
+    CORS(app)
+    
+    # Register blueprints
+    from app.routes.auth import auth_bp
+    from app.routes.main import main_bp
+    
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
+    
+    # Initialize OAuth
+    from app.utils.oauth import init_oauth
+    init_oauth(app)
     
     return app
-
-app = create_app()

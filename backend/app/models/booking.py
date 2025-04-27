@@ -1,55 +1,71 @@
-from app import db
 from datetime import datetime
+from app import db
+
+## hon kaman klo tmam mafe mashkael ## 
+
 
 class Booking(db.Model):
-    __tablename__ = 'booking'
-
+    __tablename__ = 'bookings'
+    
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=False)
+    
+    # Booking details
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
-    city_name = db.Column(db.String(20), db.ForeignKey('city.city_name'), nullable=False)
-    num_travels = db.Column(db.Integer, nullable=False)
-    total_price = db.Column(db.Float, nullable=False)
-    payment_status = db.Column(db.String(80), default='unpaid')
-    status = db.Column(db.String(20), default='pending')
-    date = db.Column(db.Date, nullable=False)
-    notes = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    # Removed redundant foreign keys to city attributes
-    # Kept only the essential city_name foreign key
-
-    def to_json(self):
-        return {
-            "id": self.id,
-            "user_id": self.user_id,
-            "start_date": str(self.start_date),
-            "end_date": str(self.end_date),
-            "city_name": self.city_name,
-            "num_travels": self.num_travels,
-            "total_price": self.total_price,
-            "payment_status": self.payment_status,
-            "status": self.status,
-            "date": str(self.date),
-            "notes": self.notes,
-            "created_at": str(self.created_at)
-        }
+    num_travelers = db.Column(db.Integer, default=1)
     
+    # Booking status
+    status = db.Column(db.String(20), default='pending')  # pending, confirmed, cancelled, completed
+    
+    # Payment information
+    total_price = db.Column(db.Float)
+    payment_status = db.Column(db.String(20), default='unpaid')  # unpaid, paid
+    
+    # Additional information
+    notes = db.Column(db.Text)
+    
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<Booking {self.id} for {self.user_id} to {self.city_id}>'
+
 class ChatSession(db.Model):
-    __tablename__='chat_messages'
+    __tablename__ = 'chat_sessions'
+    
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    content=db.Column(db.String(200),nullable=False)
-    recomended_city=db.Column(db.String(200),nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Session information
+    session_key = db.Column(db.String(64), unique=True)
+    is_active = db.Column(db.Boolean, default=True)
+    
+    # Relationships
+    messages = db.relationship('ChatMessage', backref='session', lazy='dynamic')
+    
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<ChatSession {self.id} for User {self.user_id}>'
 
-
-    def to_json(self):
-        return{
-             "id": self.id,
-            "user_id": self.user_id,
-            "content":self.content,
-            "recomended_city":self.recomended_city
-
-        }
-
+class ChatMessage(db.Model):
+    __tablename__ = 'chat_messages'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    session_id = db.Column(db.Integer, db.ForeignKey('chat_sessions.id'), nullable=False)
+    
+    # Message content
+    content = db.Column(db.Text, nullable=False)
+    role = db.Column(db.String(20), nullable=False)  # user, assistant
+    
+    # Recommendation data (if this message contains a recommendation)
+    contains_recommendation = db.Column(db.Boolean, default=False)
+    recommended_city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable=True)
+    
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    def __repr__(self):
+        return f'<ChatMessage {self.id} in Session {self.session_id}>'
