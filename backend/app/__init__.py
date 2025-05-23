@@ -12,6 +12,7 @@ load_dotenv()
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
+os.environ['OAUTHLIB_INSECURE_TRANSPORT']='1'
 
 def create_app():
     app = Flask(__name__, 

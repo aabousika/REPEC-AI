@@ -22,6 +22,7 @@ def init_oauth(app):
 # التحقق من وجود المتغيرات البيئية
     if os.environ.get('FLASK_ENV') == 'production':
         app.config['PREFERRED_URL_SCHEME'] = 'https'
+       
 
 
 
