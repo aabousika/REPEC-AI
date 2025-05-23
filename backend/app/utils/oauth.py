@@ -19,7 +19,6 @@ def init_oauth(app):
     # Ensure HTTPS for OAuth
     if os.environ.get('FLASK_ENV') == 'production':
         app.config['PREFERRED_URL_SCHEME'] = 'https'
-       
 
 def handle_google_login():
     if not google.authorized:

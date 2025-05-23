@@ -1,13 +1,10 @@
-## hon klo tmam bs knti 3amleh l import bl m2lob .. lazem awal shi t3mle import lal app wl db b3den t3mle import lal routes w ba2e l esas ### 
-
 import os
 import sys
 from datetime import datetime, timedelta
 from app import create_app, db
 from app.models.user import User, UserPreference
-from app.models.city import City, Attraction ## hon kan fe ghalta emla2ye Attraction mu Attractionn knti 7atta "nn"
+from app.models.city import City, Attraction
 from app.models.booking import Booking
-
 
 def init_db():
     """Initialize the database with sample data."""
