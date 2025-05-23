@@ -100,5 +100,4 @@ def google_login_callback():
 @auth_bp.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    # This route will be implemented later
     return render_template('auth/profile.html', title='Profile')
