@@ -9,33 +9,6 @@ openai.api_key = os.environ.get('OPENAI_API_KEY')
 class ChatGPTRecommender:
     def __init__(self):
         self.system_prompt = """
-<<<<<<< HEAD
-you are a travel recomended if you need my help to chose best trip for you please answer 
-
-"""
-    def get_city_info(self, city_id):
-        city = db.session.get(City, city_id)
-        if city:
-            return f"city :{city.name}\n descripyion:{city.description or 'no description '}"
-        return None
-
-    def generate_recommendation(self, city_id):
-        city_info = self.get_city_info(city_id)
-        if not city_info:
-            return "no information "
-
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": self.system_prompt},
-                {"role": "user", "content": f"give me a trip with this recomendation \n{city_info}"}
-            ]
-        )
-
-        return response['choices'][0]['message']['content']
-
-       
-=======
         You are a travel advisor specializing in Syrian cities. Your role is to recommend the best Syrian city or cities 
         for a traveler based on their preferences. Use the following information about Syrian cities to make your recommendations:
         
@@ -116,7 +89,6 @@ To provide personalized recommendations, I'll ask you a few questions:
         
         Budget question:
         "💸 What's your budget range for this trip? (Choose one)
->>>>>>> 9d3d1f814818d37eb72acae01fde56b656481d81
 
         💲 Low ($30-60/day): Basic accommodations, local food, public transport
 
